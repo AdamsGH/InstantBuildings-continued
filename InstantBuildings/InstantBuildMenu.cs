@@ -15,18 +15,22 @@ namespace BitwiseJonMods
     public class InstantBuildMenu : CarpenterMenu
     {
         private ModConfig _config;
+        private GameLocation _targetLocation;
 
         //Builder must be set to Robin or Wizard to avoid divide by zero error.
-        public InstantBuildMenu(ModConfig config) : base("Robin")
+        public InstantBuildMenu(ModConfig config, GameLocation targetLocation) : base("Robin")
         {
             _config = config;
+            _targetLocation = targetLocation;
 
-            //jon, 3/21/24: Add all blueprints and make them buildable instantly at farm.
+            //jon, 3/21/24: Add all blueprints and make them buildable instantly at specified location.
             int num = 0;
             this.Blueprints.Clear();
             foreach (KeyValuePair<string, BuildingData> keyValuePair in (IEnumerable<KeyValuePair<string, BuildingData>>)Game1.buildingData)
             {
-                if (this.TargetLocation.Name == "Farm")
+                if (_targetLocation.Name == "Farm" || 
+                    _targetLocation.Name == "Custom_GrampletonFields" || 
+                    _targetLocation.Name == "Custom_Ridgeside_SummitFarm")
                 {
                     this.Blueprints.Add(GetNewModifiedBlueprint(num++, keyValuePair, (string)null));
                     if (keyValuePair.Value.Skins != null)
@@ -39,6 +43,9 @@ namespace BitwiseJonMods
                     }
                 }
             }
+            
+            // Устанавливаем целевую локацию для строительства
+            this.TargetLocation = _targetLocation;
         }
 
         //jon, 1/30/24: This function is new to update all blueprints to be completed instantly and to be free or not according to config.
@@ -58,6 +65,5 @@ namespace BitwiseJonMods
             var bp = new BlueprintEntry(num, keyValuePair.Key, bd, skinId);
             return bp;
         }
-
     }
 }
