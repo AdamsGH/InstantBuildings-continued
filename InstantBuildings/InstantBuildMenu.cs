@@ -3,34 +3,28 @@ using StardewValley.GameData.Buildings;
 using StardewValley.Menus;
 using System.Collections.Generic;
 
-
 namespace BitwiseJonMods
 {
 #nullable disable
-
-    //Do not show SMAPI build warnings for this file because it was copied from the actual Stardew Valley decompiled Carpenter Menu code and then modified.
+//Do not show SMAPI build warnings for this file because it was copied from the actual Stardew Valley decompiled Carpenter Menu code and then modified.
 #pragma warning disable AvoidImplicitNetFieldCast, AvoidNetField
 
-    //jon, 3/21/24: CarpenterMenu is now completely different in v6. Inherit from base class instead of rewriting.
+//jon, 3/21/24: CarpenterMenu is now completely different in v6. Inherit from base class instead of rewriting.
     public class InstantBuildMenu : CarpenterMenu
     {
         private ModConfig _config;
-        private GameLocation _targetLocation;
 
         //Builder must be set to Robin or Wizard to avoid divide by zero error.
-        public InstantBuildMenu(ModConfig config, GameLocation targetLocation) : base("Robin")
+        public InstantBuildMenu(ModConfig config) : base("Robin", Game1.currentLocation)
         {
             _config = config;
-            _targetLocation = targetLocation;
 
-            //jon, 3/21/24: Add all blueprints and make them buildable instantly at specified location.
+            //jon, 3/21/24: Add all blueprints and make them buildable instantly at current location.
             int num = 0;
             this.Blueprints.Clear();
             foreach (KeyValuePair<string, BuildingData> keyValuePair in (IEnumerable<KeyValuePair<string, BuildingData>>)Game1.buildingData)
             {
-                if (_targetLocation.Name == "Farm" || 
-                    _targetLocation.Name == "Custom_GrampletonFields" || 
-                    _targetLocation.Name == "Custom_Ridgeside_SummitFarm")
+                if (this.TargetLocation.IsBuildableLocation())
                 {
                     this.Blueprints.Add(GetNewModifiedBlueprint(num++, keyValuePair, (string)null));
                     if (keyValuePair.Value.Skins != null)
@@ -43,9 +37,6 @@ namespace BitwiseJonMods
                     }
                 }
             }
-            
-            // Устанавливаем целевую локацию для строительства
-            this.TargetLocation = _targetLocation;
         }
 
         //jon, 1/30/24: This function is new to update all blueprints to be completed instantly and to be free or not according to config.
