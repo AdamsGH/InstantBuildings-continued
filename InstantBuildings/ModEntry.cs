@@ -27,7 +27,11 @@ namespace BitwiseJonMods
 
         private void Input_ButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            if ((e.Button == _config.ToggleInstantBuildMenuButton || e.Button == _config.PerformInstantHouseUpgradeButton) && Game1.currentLocation is Farm)
+            bool isAllowedLocation = Game1.currentLocation is Farm || 
+                                Game1.currentLocation.Name == "Custom_GrampletonFields" || 
+                                Game1.currentLocation.Name == "Custom_Ridgeside_SummitFarm";
+
+            if ((e.Button == _config.ToggleInstantBuildMenuButton || e.Button == _config.PerformInstantHouseUpgradeButton) && isAllowedLocation)
             {
                 if (e.Button == _config.ToggleInstantBuildMenuButton)
                 {
@@ -180,7 +184,7 @@ namespace BitwiseJonMods
 
         private void activateInstantBuildMenu()
         {
-            Game1.activeClickableMenu = (IClickableMenu)new InstantBuildMenu(_config);
+            Game1.activeClickableMenu = (IClickableMenu)new InstantBuildMenu(_config, Game1.currentLocation);
         }
     }
 }
