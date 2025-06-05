@@ -1,0 +1,10 @@
+{
+  "config.build-uses-resources.name": "Использовать ресурсы для строительства",
+  "config.build-uses-resources.tooltip": "Если отключено, строительство будет бесплатным (режим песочницы)",
+  "config.toggle-build-menu.name": "Кнопка меню быстрого строительства",
+  "config.toggle-build-menu.tooltip": "Кнопка для открытия/закрытия меню быстрого строительства",
+  "config.instant-house-upgrade.name": "Кнопка мгновенного улучшения дома",
+  "config.instant-house-upgrade.tooltip": "Кнопка для мгновенного улучшения дома/хижины",
+  "config.allow-magical-buildings.name": "Разрешить магические постройки без чернил",
+  "config.allow-magical-buildings.tooltip": "Если включено, позволяет строить магические постройки без магических чернил (режим песочницы)"
+}

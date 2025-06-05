@@ -1,4 +1,7 @@
 ﻿# Release notes
+## 1.2.1
+* Update to build from any location, add Generic Mod Config Menu and i18n
+
 ## 1.2.0
 * Updated to support SMAPI 3.18 in preparation for Stardew Valley v1.6
 

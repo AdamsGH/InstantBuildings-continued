@@ -1,0 +1,10 @@
+{
+  "config.build-uses-resources.name": "Build Uses Resources",
+  "config.build-uses-resources.tooltip": "If disabled, building will be free (sandbox mode)",
+  "config.toggle-build-menu.name": "Toggle Build Menu Button",
+  "config.toggle-build-menu.tooltip": "Button to open/close the instant build menu",
+  "config.instant-house-upgrade.name": "Instant House Upgrade Button",
+  "config.instant-house-upgrade.tooltip": "Button to instantly upgrade house/cabin",
+  "config.allow-magical-buildings.name": "Allow Magical Buildings Without Ink",
+  "config.allow-magical-buildings.tooltip": "If enabled, allows building magical buildings without magic ink (sandbox mode)"
+}

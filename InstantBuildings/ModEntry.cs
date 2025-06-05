@@ -23,6 +23,9 @@ namespace BitwiseJonMods
             BitwiseJonMods.Common.Utility.Log(string.Format("Config PerformInstantHouseUpgradeButton={0}", _config.PerformInstantHouseUpgradeButton));
 
             Helper.Events.Input.ButtonPressed += Input_ButtonPressed;
+            
+            // Setup Generic Mod Config Menu
+            SetupGenericModConfigMenu();
         }
 
         private void Input_ButtonPressed(object sender, ButtonPressedEventArgs e)
@@ -178,6 +181,54 @@ namespace BitwiseJonMods
         private void activateInstantBuildMenu()
         {
             Game1.activeClickableMenu = (IClickableMenu)new InstantBuildMenu(_config);
+        }
+
+        private void SetupGenericModConfigMenu()
+        {
+            // Get API for Generic Mod Config Menu
+            var configMenu = Helper.ModRegistry.GetApi<BitwiseJonMods.Common.IGenericModConfigMenuApi>("spacechase0.GenericModConfigMenu");
+            if (configMenu is null)
+                return;
+
+            // Register mod
+            configMenu.Register(
+                mod: ModManifest,
+                reset: () => _config = new ModConfig(),
+                save: () => Helper.WriteConfig(_config)
+            );
+
+            // Add settings
+            configMenu.AddBoolOption(
+                mod: ModManifest,
+                name: () => Helper.Translation.Get("config.build-uses-resources.name"),
+                tooltip: () => Helper.Translation.Get("config.build-uses-resources.tooltip"),
+                getValue: () => _config.BuildUsesResources,
+                setValue: value => _config.BuildUsesResources = value
+            );
+
+            configMenu.AddKeybind(
+                mod: ModManifest,
+                name: () => Helper.Translation.Get("config.toggle-build-menu.name"),
+                tooltip: () => Helper.Translation.Get("config.toggle-build-menu.tooltip"),
+                getValue: () => _config.ToggleInstantBuildMenuButton,
+                setValue: value => _config.ToggleInstantBuildMenuButton = value
+            );
+
+            configMenu.AddKeybind(
+                mod: ModManifest,
+                name: () => Helper.Translation.Get("config.instant-house-upgrade.name"),
+                tooltip: () => Helper.Translation.Get("config.instant-house-upgrade.tooltip"),
+                getValue: () => _config.PerformInstantHouseUpgradeButton,
+                setValue: value => _config.PerformInstantHouseUpgradeButton = value
+            );
+
+            configMenu.AddBoolOption(
+                mod: ModManifest,
+                name: () => Helper.Translation.Get("config.allow-magical-buildings.name"),
+                tooltip: () => Helper.Translation.Get("config.allow-magical-buildings.tooltip"),
+                getValue: () => _config.AllowMagicalBuildingsWithoutMagicInk,
+                setValue: value => _config.AllowMagicalBuildingsWithoutMagicInk = value
+            );
         }
     }
 }
